@@ -7,7 +7,7 @@ VIRTUALENV_DIR=${PWD}/venv
 
 update() {
     # Rename extension
-    # Filepath -> Filpre -> Filepre -> IO()
+    # Filepath -> Fileprefix -> Fileprefix -> IO()
     cp ${1} $(dirname ${1})/_${2}.$(basename ${1}) &&
     mv $(dirname ${1})/_${3}.$(basename ${1}) ${1}
     diff -u $(dirname ${1})/_${2}.$(basename ${1}) ${1}
