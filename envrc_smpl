@@ -1,5 +1,5 @@
 export PYTHONPATH=${PWD}/pypath
-export PATH=${PWD}/pypath:${PATH}
+PATH_add ${PWD}/pypath
 
 VIRTUALENV_DIR=${PWD}/venv
 . ${VIRTUALENV_DIR}/bin/activate

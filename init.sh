@@ -2,8 +2,8 @@
 
 export PYBASE=${PWD}/pybase
 export PATH=${PYBASE}:${PATH}
-VIRTUALENV_DIR=${PWD}/venv
-
+VENV=venv
+VIRTUALENV_DIR=${PWD}/${VENV}
 
 update() {
     # Rename extension
@@ -16,7 +16,7 @@ update() {
 relocate() { 
     # Rename 
     # Dirpath -> Filepath ->  Dirpath -> IO ()
-    cat ${2} | sed -e "s#^\([s]*.*VIRTUAL_ENV[= ]\"\).*\(/${1}\"\)#\1${3}\2#" > $(dirname ${2})/_new.$(basename ${2})
+    cat ${2} | sed -e "s#^\( *\(set.* \)\{0,\}VIRTUAL_ENV[= ]\)\".*/${VENV}\"#\1\"${3}/${VENV}\"#" > $(dirname ${2})/_new.$(basename ${2})
     update ${2} org new
 }
 
@@ -35,8 +35,13 @@ do
     done
 done
 
-rm ${PWD}/{.envrc,00_dot}
+rm -f ${PWD}/{.envrc,00_dot}
 
 ln -s ${PYBASE}/envrc_smpl ${PWD}/.envrc
 echo 'export PATH=${PWD}/pybase:${PATH}' > ${PWD}/00_dot
 echo 'eval "$(direnv hook bash)"' >> ${PWD}/00_dot
+
+
+echo if you want to fallback exec below commands
+ls  ${VIRTUALENV_DIR}/bin/activate* | sed -e 's#\(\(.*\)/\([^/]*\)\)#cp \2/_org.\3 \1#' | xargs -i echo {}
+
